@@ -1,0 +1,241 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator prismaClassGenerator {
+  //provider = "prisma-class-generator"
+  provider = "node node_modules/prisma-class-generator"
+
+  dryRun = false
+  output = "../src/entities"
+  seperateRelationFields = true
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "./ERD.png"
+  //theme = "neutral"
+  //default (default)
+  //forest
+  //dark
+  //neutral
+}
+
+model User {
+  id                 Int              @id @default(autoincrement())
+  email              String           @unique
+  googleId           String?          @unique
+  firstName          String?
+  lastName           String?
+  password           String?
+  role               SERVER_ROLE      @default(USER)
+  disabled           Boolean          @default(false)
+  projects           Project[]
+  access             Access[]
+  keys               Key[]
+  translations       Translation[]
+  issued             Bundle[]         @relation(name: "issuer")
+  reviewed           Bundle[]         @relation(name: "reviewer")
+  reviews            Review[]
+  comments           Comment[]
+  invite             Invite           @relation(fields: [inviteId], references: [id], name: "invitee")
+  inviteId           Int
+  invitations        Invite[]
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Invite {
+  id                 Int              @id @default(autoincrement())
+  email              String           @unique
+  token              String           @unique
+  role               SERVER_ROLE      @default(USER)
+  expiration         DateTime         @default(now())
+  user               User?            @relation(name: "invitee")
+  initiator          User?            @relation(fields: [initiatorId], references: [id])
+  initiatorId        Int?
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Project {
+  id                 Int              @id @default(autoincrement())
+  name               String           @unique
+  description        String
+  access             Access[]
+  keys               Key[]
+  languages          Language[]
+  owner              User             @relation(fields: [ownerId], references: [id])
+  ownerId            Int
+  bundles            Bundle[]
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Config {
+  id                 Int              @id @default(autoincrement())
+  key                String           @unique
+  name               String
+  value              String
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Access {
+  id                 Int              @id @default(autoincrement())
+  project            Project          @relation(fields: [projectId], references: [id])
+  projectId          Int
+  user               User             @relation(fields: [userId], references: [id])
+  userId             Int
+  role               Role             @relation(fields: [roleId], references: [id])
+  roleId             Int
+  revoked            Boolean          @default(false)
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Role {
+  id                 Int              @id @default(autoincrement())
+  name               String           @unique
+  description        String
+  accesses           Access[]
+  rights             Right[]
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Right {
+  id                 Int              @id @default(autoincrement())
+  name               String           @unique
+  description        String
+  roles              Role[]
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Key {
+  id                 Int              @id @default(autoincrement())
+  key                String
+  project            Project          @relation(fields: [projectId], references: [id])
+  projectId          Int
+  author             User             @relation(fields: [userId], references: [id])
+  userId             Int
+  //parent children connection is a structural connection in the present state of the tree 
+  parent             Key              @relation(name: "tree", fields: [parentId], references: [id])
+  parentId           Int
+  children           Key[]            @relation(name: "tree")
+  translations       Translation[]
+  deleted            Boolean          @default(false)
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Language {
+  id                 Int              @id @default(autoincrement())
+  key                String
+  description        String           @default("")
+  deleted            Boolean          @default(false)
+  project            Project          @relation(fields: [projectId], references: [id])
+  projectId          Int
+  translations       Translation[]
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Translation {
+  id                 Int              @id @default(autoincrement())
+  value              String
+  deleted            Boolean          @default(false)
+  key                Key              @relation(fields: [keyId], references: [id])
+  keyId              Int
+  language           Language         @relation(fields: [languageId], references: [id])
+  languageId         Int
+  author             User             @relation(fields: [userId], references: [id])
+  userId             Int
+  reviews            Review[]
+  bundles            Bundle[]
+  version            Int              @default(0)
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Review {
+  id                 Int              @id @default(autoincrement())
+  comment            String?
+  reviewer           User             @relation(fields: [reviewerId], references: [id])
+  reviewerId         Int
+  translation        Translation      @relation(fields: [translationId], references: [id])
+  translationId      Int
+  status             REVIEW_STATUS    @default(CHANGE_REQUEST)
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Bundle {
+  id                 Int              @id @default(autoincrement())
+  name               String
+  description        String
+  issuer             User             @relation(name: "issuer", fields: [issuerId], references: [id])
+  issuerId           Int
+  reviewer           User?            @relation(name: "reviewer", fields: [reviewerId], references: [id])
+  reviewerId         Int?
+  translations       Translation[]
+  comments           Comment[]
+  projectId          Int
+  project            Project          @relation(fields: [projectId], references: [id])
+  status             BUNDLE_STATUS    @default(DRAFT)
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Comment {
+  id                 Int              @id @default(autoincrement())
+  text               String?
+  author             User             @relation(fields: [userId], references: [id])
+  userId             Int
+  bundle             Bundle           @relation(fields: [bundleId], references: [id])
+  bundleId           Int
+  status             BUNDLE_STATUS?
+  resolved           Boolean          @default(false) 
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+
+enum BUNDLE_STATUS {
+  DRAFT
+  SUBMITTED
+  CHANGE_REQUEST
+  APPROVED
+  DENIED
+}
+
+enum REVIEW_STATUS {
+  CHANGE_REQUEST
+  APPROVED
+  DENIED
+}
+
+// server wide grants
+enum SERVER_ROLE {
+  // ordinary user
+  USER
+  // can create projects and manage those project, they created
+  PO
+  // do hr stuff, like create users
+  HR
+  // can do anything
+  ADMIN
+}

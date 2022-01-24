@@ -1,0 +1,48 @@
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthMiddleware } from './auth/auth.middleware';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { UtilsModule } from './utils/utils.module';
+import { InvitationsModule } from './invitations/invitations.module';
+import { ProjectsModule } from './projects/projects.module';
+import { LanguagesModule } from './languages/languages.module';
+import { AccessesModule } from './accesses/accesses.module';
+import { CommentsModule } from './comments/comments.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { RightsModule } from './rights/rights.module';
+import { RolesModule } from './roles/roles.module';
+
+@ApiBearerAuth()
+@Module({
+  imports: [
+    AuthModule,
+    UsersModule,
+    UtilsModule,
+    InvitationsModule,
+    ProjectsModule,
+    LanguagesModule,
+    AccessesModule,
+    CommentsModule,
+    ReviewsModule,
+    RightsModule,
+    RolesModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        '/api/auth',
+        '/api/auth/(.*)',
+        '/api/v([0-9]+)/auth',
+        '/api/v([0-9]+)/auth/(.*)',
+      )
+      .forRoutes('/');
+  }
+}
