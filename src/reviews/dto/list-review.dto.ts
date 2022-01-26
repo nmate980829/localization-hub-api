@@ -6,4 +6,4 @@ import { CreateReviewDto } from './create-review.dto';
 
 export class ListReviewDto extends PickType(CreateReviewDto, [
   'translationId',
-]) {}
+] as const) {}

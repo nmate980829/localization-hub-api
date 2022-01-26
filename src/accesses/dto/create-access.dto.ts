@@ -6,7 +6,7 @@ export class CreateAccessDto extends PickType(Access, [
   'projectId',
   'userId',
   'roleId',
-]) {
+] as const) {
   @IsPositive()
   projectId: number;
   @IsPositive()

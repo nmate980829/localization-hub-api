@@ -7,7 +7,7 @@ export class CreateCommentDto extends PickType(Comment, [
   'text',
   'bundleId',
   'status',
-]) {
+] as const) {
   @IsOptional()
   @MaxLength(256)
   text?: string;

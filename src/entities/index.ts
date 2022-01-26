@@ -12,14 +12,16 @@ import { Role as _Role } from './role';
 import { RoleRelations as _RoleRelations } from './role_relations';
 import { Right as _Right } from './right';
 import { RightRelations as _RightRelations } from './right_relations';
-import { Key as _Key } from './key';
-import { KeyRelations as _KeyRelations } from './key_relations';
+import { Identifier as _Identifier } from './identifier';
+import { IdentifierRelations as _IdentifierRelations } from './identifier_relations';
 import { Language as _Language } from './language';
 import { LanguageRelations as _LanguageRelations } from './language_relations';
 import { Translation as _Translation } from './translation';
 import { TranslationRelations as _TranslationRelations } from './translation_relations';
 import { Review as _Review } from './review';
 import { ReviewRelations as _ReviewRelations } from './review_relations';
+import { Branch as _Branch } from './branch';
+import { BranchRelations as _BranchRelations } from './branch_relations';
 import { Bundle as _Bundle } from './bundle';
 import { BundleRelations as _BundleRelations } from './bundle_relations';
 import { Comment as _Comment } from './comment';
@@ -40,14 +42,16 @@ export namespace PrismaModel {
   export class RoleRelations extends _RoleRelations {}
   export class Right extends _Right {}
   export class RightRelations extends _RightRelations {}
-  export class Key extends _Key {}
-  export class KeyRelations extends _KeyRelations {}
+  export class Identifier extends _Identifier {}
+  export class IdentifierRelations extends _IdentifierRelations {}
   export class Language extends _Language {}
   export class LanguageRelations extends _LanguageRelations {}
   export class Translation extends _Translation {}
   export class TranslationRelations extends _TranslationRelations {}
   export class Review extends _Review {}
   export class ReviewRelations extends _ReviewRelations {}
+  export class Branch extends _Branch {}
+  export class BranchRelations extends _BranchRelations {}
   export class Bundle extends _Bundle {}
   export class BundleRelations extends _BundleRelations {}
   export class Comment extends _Comment {}
@@ -68,14 +72,16 @@ export namespace PrismaModel {
     RoleRelations,
     Right,
     RightRelations,
-    Key,
-    KeyRelations,
+    Identifier,
+    IdentifierRelations,
     Language,
     LanguageRelations,
     Translation,
     TranslationRelations,
     Review,
     ReviewRelations,
+    Branch,
+    BranchRelations,
     Bundle,
     BundleRelations,
     Comment,

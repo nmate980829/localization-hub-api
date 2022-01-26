@@ -26,6 +26,11 @@ export class ProjectsService {
             id: user.id,
           },
         },
+        branches: {
+          create: {
+            key: 'main',
+          },
+        },
       },
     });
     return project;

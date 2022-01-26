@@ -1,6 +1,6 @@
 import { Project } from './project';
 import { Access } from './access';
-import { Key } from './key';
+import { Identifier } from './identifier';
 import { Translation } from './translation';
 import { Bundle } from './bundle';
 import { Review } from './review';
@@ -15,8 +15,8 @@ export class UserRelations {
   @ApiProperty({ isArray: true, type: () => Access })
   access: Access[];
 
-  @ApiProperty({ isArray: true, type: () => Key })
-  keys: Key[];
+  @ApiProperty({ isArray: true, type: () => Identifier })
+  identifiers: Identifier[];
 
   @ApiProperty({ isArray: true, type: () => Translation })
   translations: Translation[];

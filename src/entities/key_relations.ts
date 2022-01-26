@@ -2,6 +2,7 @@ import { Project } from './project';
 import { User } from './user';
 import { Key } from './key';
 import { Translation } from './translation';
+import { Branch } from './branch';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class KeyRelations {
@@ -19,4 +20,7 @@ export class KeyRelations {
 
   @ApiProperty({ isArray: true, type: () => Translation })
   translations: Translation[];
+
+  @ApiProperty({ type: () => Branch })
+  branch: Branch;
 }

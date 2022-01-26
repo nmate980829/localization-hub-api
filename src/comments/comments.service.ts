@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { User, Comment } from '@prisma/client';
+import { User, Comment, BUNDLE_STATUS } from '@prisma/client';
 import { PrismaService } from 'src/utils/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ListCommentDto } from './dto/list-comment.dto';
@@ -36,14 +36,16 @@ export class CommentsService {
         },
       },
     });
-    await this.prisma.bundle.update({
-      where: {
-        id: bundleId,
-      },
-      data: {
-        status,
-      },
-    });
+    if (status !== undefined)
+      await this.prisma.bundle.update({
+        where: {
+          id: bundleId,
+        },
+        data: {
+          status,
+          reviewerId: status === BUNDLE_STATUS.APPROVED ? user.id : undefined,
+        },
+      });
     return comment;
   }
 

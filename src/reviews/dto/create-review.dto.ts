@@ -7,7 +7,7 @@ export class CreateReviewDto extends PickType(Review, [
   'comment',
   'translationId',
   'status',
-]) {
+] as const) {
   @IsOptional()
   @MaxLength(256)
   comment?: string;

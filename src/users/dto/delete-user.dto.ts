@@ -2,7 +2,7 @@ import { ApiProperty, PartialType, PickType } from '@nestjs/swagger';
 import { MaxLength, MinLength } from 'class-validator';
 import { User } from 'src/entities/user';
 
-export class DeleteUserDto extends PickType(User, ['password']) {
+export class DeleteUserDto extends PickType(User, ['password'] as const) {
   @ApiProperty() //{ type: String })
   @MinLength(6)
   @MaxLength(128)

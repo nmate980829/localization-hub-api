@@ -44,7 +44,7 @@ model User {
   disabled           Boolean          @default(false)
   projects           Project[]
   access             Access[]
-  keys               Key[]
+  identifiers        Identifier[]
   translations       Translation[]
   issued             Bundle[]         @relation(name: "issuer")
   reviewed           Bundle[]         @relation(name: "reviewer")
@@ -75,10 +75,11 @@ model Project {
   name               String           @unique
   description        String
   access             Access[]
-  keys               Key[]
+  identifiers        Identifier[]
   languages          Language[]
   owner              User             @relation(fields: [ownerId], references: [id])
   ownerId            Int
+  branches           Branch[]
   bundles            Bundle[]
   updatedAt          DateTime         @default(now()) @updatedAt
   createdAt          DateTime         @default(now())
@@ -125,7 +126,7 @@ model Right {
   createdAt          DateTime         @default(now())
 }
 
-model Key {
+model Identifier {
   id                 Int              @id @default(autoincrement())
   key                String
   project            Project          @relation(fields: [projectId], references: [id])
@@ -133,10 +134,12 @@ model Key {
   author             User             @relation(fields: [userId], references: [id])
   userId             Int
   //parent children connection is a structural connection in the present state of the tree 
-  parent             Key              @relation(name: "tree", fields: [parentId], references: [id])
-  parentId           Int
-  children           Key[]            @relation(name: "tree")
+  parent             Identifier?              @relation(name: "tree", fields: [parentId], references: [id])
+  parentId           Int?
+  children           Identifier[]            @relation(name: "tree")
   translations       Translation[]
+  branch             Branch           @relation(fields: [branchId], references: [id])
+  branchId           Int
   deleted            Boolean          @default(false)
   updatedAt          DateTime         @default(now()) @updatedAt
   createdAt          DateTime         @default(now())
@@ -158,8 +161,8 @@ model Translation {
   id                 Int              @id @default(autoincrement())
   value              String
   deleted            Boolean          @default(false)
-  key                Key              @relation(fields: [keyId], references: [id])
-  keyId              Int
+  identifier         Identifier       @relation(fields: [identifierId], references: [id])
+  identifierId       Int
   language           Language         @relation(fields: [languageId], references: [id])
   languageId         Int
   author             User             @relation(fields: [userId], references: [id])
@@ -169,6 +172,7 @@ model Translation {
   version            Int              @default(0)
   updatedAt          DateTime         @default(now()) @updatedAt
   createdAt          DateTime         @default(now())
+  @@unique([identifierId, languageId, version])
 }
 
 model Review {
@@ -179,6 +183,16 @@ model Review {
   translation        Translation      @relation(fields: [translationId], references: [id])
   translationId      Int
   status             REVIEW_STATUS    @default(CHANGE_REQUEST)
+  updatedAt          DateTime         @default(now()) @updatedAt
+  createdAt          DateTime         @default(now())
+}
+
+model Branch {
+  id                 Int              @id @default(autoincrement())
+  key                String           @unique
+  project            Project          @relation(fields: [projectId], references: [id])
+  projectId          Int
+  identifiers        Identifier[]
   updatedAt          DateTime         @default(now()) @updatedAt
   createdAt          DateTime         @default(now())
 }

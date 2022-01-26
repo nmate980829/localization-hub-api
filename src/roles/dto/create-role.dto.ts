@@ -2,7 +2,10 @@ import { PickType } from '@nestjs/swagger';
 import { IsArray, IsPositive, MaxLength, MinLength } from 'class-validator';
 import { Role } from 'src/entities/role';
 
-export class CreateRoleDto extends PickType(Role, ['name', 'description']) {
+export class CreateRoleDto extends PickType(Role, [
+  'name',
+  'description',
+] as const) {
   @MinLength(4)
   @MaxLength(128)
   name: string;

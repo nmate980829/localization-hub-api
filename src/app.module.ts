@@ -14,6 +14,10 @@ import { CommentsModule } from './comments/comments.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { RightsModule } from './rights/rights.module';
 import { RolesModule } from './roles/roles.module';
+import { BranchesModule } from './branches/branches.module';
+import { IdentifiersModule } from './identifiers/identifiers.module';
+import { BundlesModule } from './bundles/bundles.module';
+import { TranslationsModule } from './translations/translations.module';
 
 @ApiBearerAuth()
 @Module({
@@ -29,6 +33,10 @@ import { RolesModule } from './roles/roles.module';
     ReviewsModule,
     RightsModule,
     RolesModule,
+    BranchesModule,
+    IdentifiersModule,
+    BundlesModule,
+    TranslationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

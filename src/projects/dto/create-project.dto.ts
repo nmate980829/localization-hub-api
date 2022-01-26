@@ -5,7 +5,7 @@ import { Project } from 'src/entities/project';
 export class CreateProjectDto extends PickType(Project, [
   'name',
   'description',
-]) {
+] as const) {
   @MinLength(5)
   @MaxLength(128)
   name: string;

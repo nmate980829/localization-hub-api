@@ -11,7 +11,7 @@ export class Translation {
   deleted: boolean;
 
   @ApiProperty({ type: Number })
-  keyId: number;
+  identifierId: number;
 
   @ApiProperty({ type: Number })
   languageId: number;

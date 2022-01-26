@@ -16,6 +16,9 @@ export class Key {
   @ApiProperty({ type: Number })
   parentId: number;
 
+  @ApiProperty({ type: Number })
+  branchId: number;
+
   @ApiProperty({ type: Boolean })
   deleted: boolean;
 

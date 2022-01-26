@@ -6,7 +6,7 @@ export class CreateLanguageDto extends PickType(Language, [
   'key',
   'description',
   'projectId',
-]) {
+] as const) {
   @MinLength(2)
   @MaxLength(128)
   key: string;
