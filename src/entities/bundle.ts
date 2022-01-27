@@ -11,8 +11,8 @@ export class Bundle {
   @ApiProperty({ type: String })
   description: string;
 
-  @ApiProperty({ type: Number })
-  issuerId: number;
+  @ApiPropertyOptional({ type: Number })
+  issuerId?: number;
 
   @ApiPropertyOptional({ type: Number })
   reviewerId?: number;

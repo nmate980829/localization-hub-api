@@ -9,8 +9,8 @@ export class IdentifierRelations {
   @ApiProperty({ type: () => Project })
   project: Project;
 
-  @ApiProperty({ type: () => User })
-  author: User;
+  @ApiPropertyOptional({ type: () => User })
+  author?: User;
 
   @ApiPropertyOptional({ type: () => Identifier })
   parent?: Identifier;

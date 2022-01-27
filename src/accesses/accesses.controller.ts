@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Access } from 'src/entities/access';
+import { EmptyResponse } from 'src/types/response.dto';
 import { Rights } from 'src/utils/authorization/rights.decorator';
 import {
   ApiCreated,
@@ -57,7 +58,7 @@ export class AccessesController {
 
   @Rights('delete-access')
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {
     return this.accessesService.remove(id);
   }

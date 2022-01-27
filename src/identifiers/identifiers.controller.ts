@@ -20,6 +20,7 @@ import { Identifier } from 'src/entities/identifier';
 import { ListIdentifierDto } from './dto/list-identifier.dto';
 import { TreeIdentifierDto } from './dto/tree-identifier.dto';
 import { User } from 'src/utils/user.decorator';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @Controller('identifiers')
 export class IdentifiersController {
@@ -68,7 +69,7 @@ export class IdentifiersController {
 
   @Rights('identifier')
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {
     return this.identifiersService.remove(id);
   }

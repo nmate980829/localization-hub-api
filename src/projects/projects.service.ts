@@ -31,6 +31,20 @@ export class ProjectsService {
             key: 'main',
           },
         },
+        access: {
+          create: {
+            user: {
+              connect: {
+                id: user.id,
+              },
+            },
+            role: {
+              connect: {
+                name: 'owner',
+              },
+            },
+          },
+        },
       },
     });
     return project;

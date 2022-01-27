@@ -19,6 +19,7 @@ import {
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ListCommentDto } from './dto/list-comment.dto';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @Controller('comments')
 export class CommentsController {
@@ -61,7 +62,7 @@ export class CommentsController {
 
   @Rights('comment')
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number, @User('id') userId: number): Promise<void> {
     return this.commentsService.remove(id, userId);
   }

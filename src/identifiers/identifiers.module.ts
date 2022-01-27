@@ -7,6 +7,12 @@ import { UtilsModule } from 'src/utils/utils.module';
 @Module({
   imports: [UtilsModule],
   controllers: [IdentifiersController],
-  providers: [IdentifiersService, Resolver],
+  providers: [
+    IdentifiersService,
+    {
+      provide: 'ProjectResolver',
+      useClass: Resolver,
+    },
+  ],
 })
 export class IdentifiersModule {}

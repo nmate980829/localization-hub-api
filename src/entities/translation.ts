@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class Translation {
   @ApiProperty({ type: Number })
@@ -16,8 +16,8 @@ export class Translation {
   @ApiProperty({ type: Number })
   languageId: number;
 
-  @ApiProperty({ type: Number })
-  userId: number;
+  @ApiPropertyOptional({ type: Number })
+  userId?: number;
 
   @ApiProperty({ type: Number })
   version: number;

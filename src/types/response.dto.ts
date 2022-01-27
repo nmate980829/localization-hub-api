@@ -8,3 +8,5 @@ export class Response<T> {
   @ApiPropertyOptional()
   data?: T;
 }
+
+export class EmptyResponse {}

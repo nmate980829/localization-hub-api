@@ -14,6 +14,7 @@ import {
 import { DeleteUserDto } from './dto/delete-user.dto';
 import { UpdateMeDto } from './dto/update-me.dto';
 import { SocialDto } from 'src/auth/dto/social.dto';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @ApiBearerAuth()
 @Controller('users')
@@ -61,7 +62,7 @@ export class UsersController {
   }
 
   @Delete('me')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   deleteMe(@Body() dto: DeleteUserDto, @User('id') id: number): Promise<void> {
     return this.usersService.removeMe(id, dto);
   }
@@ -89,7 +90,7 @@ export class UsersController {
 
   @HR()
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number, @User() user: UserEntity): Promise<void> {
     return this.usersService.remove(id, user);
   }

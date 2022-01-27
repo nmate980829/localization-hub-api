@@ -17,6 +17,7 @@ import {
 } from 'src/utils/response-wrapper/wrap.decorator';
 import { PO } from 'src/utils/authorization/serverRole.decorator';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @PO()
 @Controller('roles')
@@ -48,7 +49,7 @@ export class RolesController {
   }
 
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {
     return this.rolesService.remove(+id);
   }

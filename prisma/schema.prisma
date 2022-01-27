@@ -96,11 +96,11 @@ model Config {
 
 model Access {
   id                 Int              @id @default(autoincrement())
-  project            Project          @relation(fields: [projectId], references: [id])
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId          Int
-  user               User             @relation(fields: [userId], references: [id])
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId             Int
-  role               Role             @relation(fields: [roleId], references: [id])
+  role               Role             @relation(fields: [roleId], references: [id], onDelete: Cascade)
   roleId             Int
   revoked            Boolean          @default(false)
   updatedAt          DateTime         @default(now()) @updatedAt
@@ -129,16 +129,16 @@ model Right {
 model Identifier {
   id                 Int              @id @default(autoincrement())
   key                String
-  project            Project          @relation(fields: [projectId], references: [id])
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId          Int
-  author             User             @relation(fields: [userId], references: [id])
-  userId             Int
+  author             User?             @relation(fields: [userId], references: [id])
+  userId             Int?
   //parent children connection is a structural connection in the present state of the tree 
-  parent             Identifier?              @relation(name: "tree", fields: [parentId], references: [id])
+  parent             Identifier?       @relation(name: "tree", fields: [parentId], references: [id], onDelete: Cascade)
   parentId           Int?
-  children           Identifier[]            @relation(name: "tree")
+  children           Identifier[]      @relation(name: "tree")
   translations       Translation[]
-  branch             Branch           @relation(fields: [branchId], references: [id])
+  branch             Branch           @relation(fields: [branchId], references: [id], onDelete: Cascade)
   branchId           Int
   deleted            Boolean          @default(false)
   updatedAt          DateTime         @default(now()) @updatedAt
@@ -150,7 +150,7 @@ model Language {
   key                String
   description        String           @default("")
   deleted            Boolean          @default(false)
-  project            Project          @relation(fields: [projectId], references: [id])
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId          Int
   translations       Translation[]
   updatedAt          DateTime         @default(now()) @updatedAt
@@ -161,12 +161,12 @@ model Translation {
   id                 Int              @id @default(autoincrement())
   value              String
   deleted            Boolean          @default(false)
-  identifier         Identifier       @relation(fields: [identifierId], references: [id])
+  identifier         Identifier       @relation(fields: [identifierId], references: [id], onDelete: Cascade)
   identifierId       Int
-  language           Language         @relation(fields: [languageId], references: [id])
+  language           Language         @relation(fields: [languageId], references: [id], onDelete: Cascade)
   languageId         Int
-  author             User             @relation(fields: [userId], references: [id])
-  userId             Int
+  author             User?            @relation(fields: [userId], references: [id])
+  userId             Int?
   reviews            Review[]
   bundles            Bundle[]
   version            Int              @default(0)
@@ -178,9 +178,9 @@ model Translation {
 model Review {
   id                 Int              @id @default(autoincrement())
   comment            String?
-  reviewer           User             @relation(fields: [reviewerId], references: [id])
-  reviewerId         Int
-  translation        Translation      @relation(fields: [translationId], references: [id])
+  reviewer           User?            @relation(fields: [reviewerId], references: [id])
+  reviewerId         Int?
+  translation        Translation      @relation(fields: [translationId], references: [id], onDelete: Cascade)
   translationId      Int
   status             REVIEW_STATUS    @default(CHANGE_REQUEST)
   updatedAt          DateTime         @default(now()) @updatedAt
@@ -190,7 +190,7 @@ model Review {
 model Branch {
   id                 Int              @id @default(autoincrement())
   key                String           @unique
-  project            Project          @relation(fields: [projectId], references: [id])
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId          Int
   identifiers        Identifier[]
   updatedAt          DateTime         @default(now()) @updatedAt
@@ -201,14 +201,14 @@ model Bundle {
   id                 Int              @id @default(autoincrement())
   name               String
   description        String
-  issuer             User             @relation(name: "issuer", fields: [issuerId], references: [id])
-  issuerId           Int
+  issuer             User?            @relation(name: "issuer", fields: [issuerId], references: [id])
+  issuerId           Int?
   reviewer           User?            @relation(name: "reviewer", fields: [reviewerId], references: [id])
   reviewerId         Int?
   translations       Translation[]
   comments           Comment[]
   projectId          Int
-  project            Project          @relation(fields: [projectId], references: [id])
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   status             BUNDLE_STATUS    @default(DRAFT)
   updatedAt          DateTime         @default(now()) @updatedAt
   createdAt          DateTime         @default(now())
@@ -217,9 +217,9 @@ model Bundle {
 model Comment {
   id                 Int              @id @default(autoincrement())
   text               String?
-  author             User             @relation(fields: [userId], references: [id])
-  userId             Int
-  bundle             Bundle           @relation(fields: [bundleId], references: [id])
+  author             User?            @relation(fields: [userId], references: [id])
+  userId             Int?
+  bundle             Bundle           @relation(fields: [bundleId], references: [id], onDelete: Cascade)
   bundleId           Int
   status             BUNDLE_STATUS?
   resolved           Boolean          @default(false) 

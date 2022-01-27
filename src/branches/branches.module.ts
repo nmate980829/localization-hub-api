@@ -7,6 +7,12 @@ import { UtilsModule } from 'src/utils/utils.module';
 @Module({
   imports: [UtilsModule],
   controllers: [BranchesController],
-  providers: [BranchesService, Resolver],
+  providers: [
+    BranchesService,
+    {
+      provide: 'ProjectResolver',
+      useClass: Resolver,
+    },
+  ],
 })
 export class BranchesModule {}

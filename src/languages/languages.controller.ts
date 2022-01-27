@@ -18,6 +18,7 @@ import {
 } from 'src/utils/response-wrapper/wrap.decorator';
 import { Language } from 'src/entities/language';
 import { ListLanguage } from './dto/list-language.dto';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @Controller('languages')
 export class LanguagesController {
@@ -52,7 +53,7 @@ export class LanguagesController {
   }
   @Rights('delete-language')
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {
     return this.languagesService.remove(id);
   }

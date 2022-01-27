@@ -7,6 +7,12 @@ import { UtilsModule } from 'src/utils/utils.module';
 @Module({
   imports: [UtilsModule],
   controllers: [BundlesController],
-  providers: [BundlesService, Resolver],
+  providers: [
+    BundlesService,
+    {
+      provide: 'ProjectResolver',
+      useClass: Resolver,
+    },
+  ],
 })
 export class BundlesModule {}

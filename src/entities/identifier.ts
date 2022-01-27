@@ -10,8 +10,8 @@ export class Identifier {
   @ApiProperty({ type: Number })
   projectId: number;
 
-  @ApiProperty({ type: Number })
-  userId: number;
+  @ApiPropertyOptional({ type: Number })
+  userId?: number;
 
   @ApiPropertyOptional({ type: Number })
   parentId?: number;

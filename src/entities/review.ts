@@ -8,8 +8,8 @@ export class Review {
   @ApiPropertyOptional({ type: String })
   comment?: string;
 
-  @ApiProperty({ type: Number })
-  reviewerId: number;
+  @ApiPropertyOptional({ type: Number })
+  reviewerId?: number;
 
   @ApiProperty({ type: Number })
   translationId: number;

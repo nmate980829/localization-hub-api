@@ -8,8 +8,8 @@ export class Comment {
   @ApiPropertyOptional({ type: String })
   text?: string;
 
-  @ApiProperty({ type: Number })
-  userId: number;
+  @ApiPropertyOptional({ type: Number })
+  userId?: number;
 
   @ApiProperty({ type: Number })
   bundleId: number;

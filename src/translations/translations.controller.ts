@@ -22,6 +22,7 @@ import { Translation } from 'src/entities/translation';
 import { UpdateTranslationDto } from './dto/update-translation.dto';
 import { IdentifierEntity } from './entities/translation.entity';
 import { TreeIdentifierDto } from 'src/identifiers/dto/tree-identifier.dto';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @Controller('translations')
 export class TranslationsController {
@@ -64,13 +65,14 @@ export class TranslationsController {
   update(
     @Param('id') id: number,
     @Body() dto: UpdateTranslationDto,
+    @User('id') userId: number,
   ): Promise<Translation> {
-    return this.translationsService.update(id, dto);
+    return this.translationsService.update(id, dto, userId);
   }
 
   @Rights('translate')
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(
     @Param('id') id: number,
     @Right('translation-moderator') moderator: boolean,

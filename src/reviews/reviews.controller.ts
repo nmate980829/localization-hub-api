@@ -11,6 +11,7 @@ import { Review } from 'src/entities/review';
 import { User } from 'src/utils/user.decorator';
 import { ListReviewDto } from './dto/list-review.dto';
 import { Right } from 'src/utils/authorization/right.decorator';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -42,7 +43,7 @@ export class ReviewsController {
 
   @Rights()
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(
     @Param('id') id: number,
     @User('id') userId: number,

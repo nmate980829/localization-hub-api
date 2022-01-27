@@ -13,7 +13,7 @@ export class Resolver implements ProjectResolver {
       include: {
         translation: {
           include: {
-            key: {
+            identifier: {
               include: {
                 project: true,
               },
@@ -23,6 +23,6 @@ export class Resolver implements ProjectResolver {
       },
     });
     if (!review) throw new NotFoundException();
-    return review.translation.key.project;
+    return review.translation.identifier.project;
   }
 }

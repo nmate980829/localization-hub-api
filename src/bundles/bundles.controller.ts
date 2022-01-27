@@ -8,9 +8,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { Bundle } from 'src/entities/bundle';
+import { EmptyResponse } from 'src/types/response.dto';
 import { Right } from 'src/utils/authorization/right.decorator';
 import { Rights } from 'src/utils/authorization/rights.decorator';
-import { ApiCreated, ApiOk, ApiOkArray } from 'src/utils/response-wrapper/wrap.decorator';
+import {
+  ApiCreated,
+  ApiOk,
+  ApiOkArray,
+} from 'src/utils/response-wrapper/wrap.decorator';
 import { User } from 'src/utils/user.decorator';
 import { BundlesService } from './bundles.service';
 import { CreateBundleDto } from './dto/create-bundle.dto';
@@ -58,7 +63,7 @@ export class BundlesController {
 
   @Rights('bundle')
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(
     @Param('id') id: number,
     @Right('bundle-moderator') moderator: boolean,

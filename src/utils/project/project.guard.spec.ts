@@ -1,6 +1,6 @@
-import { ProjectInterceptor } from './project.interceptor';
+import { ProjectGuard } from './project.guard';
 
-describe('ProjectInterceptor', () => {
+describe('ProjectGuard', () => {
   it('should be defined', () => {
     //expect(new ProjectInterceptor()).toBeDefined();
   });

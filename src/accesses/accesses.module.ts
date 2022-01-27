@@ -7,6 +7,12 @@ import { Resolver } from './resolver';
 @Module({
   imports: [UtilsModule],
   controllers: [AccessesController],
-  providers: [AccessesService, Resolver],
+  providers: [
+    AccessesService,
+    {
+      provide: 'ProjectResolver',
+      useClass: Resolver,
+    },
+  ],
 })
 export class AccessesModule {}

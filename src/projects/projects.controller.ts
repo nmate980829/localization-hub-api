@@ -21,6 +21,7 @@ import { Project } from 'src/entities/project';
 import { User } from 'src/utils/user.decorator';
 import { User as UserEntity } from '@prisma/client';
 import { TransferProjectDto } from './dto/transfer-project.dto';
+import { EmptyResponse } from 'src/types/response.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -71,7 +72,7 @@ export class ProjectsController {
 
   @PO()
   @Delete(':id')
-  @ApiOk(undefined)
+  @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {
     return this.projectsService.remove(id);
   }
