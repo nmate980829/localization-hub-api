@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { InvitationsService } from './invitations.service';
 import { InvitationsController } from './invitations.controller';
-import { UtilsModule } from 'src/utils/utils.module';
+import { PrismaModule } from 'src/utils/prisma/prisma.module';
 
 @Module({
-  imports: [UtilsModule],
+  imports: [PrismaModule],
   controllers: [InvitationsController],
   providers: [InvitationsService],
 })

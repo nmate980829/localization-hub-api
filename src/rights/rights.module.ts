@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { RightsService } from './rights.service';
 import { RightsController } from './rights.controller';
-import { UtilsModule } from 'src/utils/utils.module';
+import { PrismaModule } from 'src/utils/prisma/prisma.module';
 
 @Module({
-  imports: [UtilsModule],
+  imports: [PrismaModule],
   controllers: [RightsController],
   providers: [RightsService],
 })

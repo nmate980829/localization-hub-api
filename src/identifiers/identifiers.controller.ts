@@ -21,7 +21,9 @@ import { ListIdentifierDto } from './dto/list-identifier.dto';
 import { TreeIdentifierDto } from './dto/tree-identifier.dto';
 import { User } from 'src/utils/user.decorator';
 import { EmptyResponse } from 'src/types/response.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Identifiers')
 @Controller('identifiers')
 export class IdentifiersController {
   constructor(private readonly identifiersService: IdentifiersService) {}

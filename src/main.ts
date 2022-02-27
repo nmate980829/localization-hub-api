@@ -26,6 +26,7 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
       forbidNonWhitelisted: true,
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
   app.useGlobalInterceptors(
@@ -50,8 +51,20 @@ async function bootstrap() {
     )
     .addSecurityRequirements('BearerAuth')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const document = SwaggerModule.createDocument(app, config, {
+    operationIdFactory: (controllerKey: string, methodKey: string) => {
+      return (
+        controllerKey.replace('Controller', '') +
+        methodKey.charAt(0).toUpperCase() +
+        methodKey.slice(1)
+      );
+    },
+  });
+  SwaggerModule.setup('openapi', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   await app.listen(3000);
 }

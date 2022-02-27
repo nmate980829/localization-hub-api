@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Identifier, Translation } from '@prisma/client';
 import { TreeIdentifierDto } from 'src/identifiers/dto/tree-identifier.dto';
-import { PrismaService } from 'src/utils/prisma.service';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { CreateTranslationDto } from './dto/create-translation.dto';
 import { ListTranslationDto } from './dto/list-translation.dto';
 import { UpdateTranslationDto } from './dto/update-translation.dto';
@@ -93,7 +93,7 @@ export class TranslationsService {
   async tree(dto: TreeIdentifierDto): Promise<IdentifierEntity[]> {
     const { projectId, branches } = dto;
     const roots = await this.prisma.identifier.findMany({
-      where: { parentId: null, projectId, branchId: { in: branches } },
+      where: { parentId: null, projectId, branch: { key: { in: branches } } },
     });
     return await Promise.all(
       roots.map((element) => this.fetchChildren(element, branches)),
@@ -102,11 +102,11 @@ export class TranslationsService {
 
   async fetchChildren(
     parent: Identifier,
-    branches: number[],
+    branches: string[],
   ): Promise<IdentifierEntity> {
     const { parentId } = parent;
     const children = await this.prisma.identifier.findMany({
-      where: { parentId, branchId: { in: branches } },
+      where: { parentId, branch: { key: { in: branches } } },
     });
     const result = parent as IdentifierEntity;
     if (children.length === 0) {

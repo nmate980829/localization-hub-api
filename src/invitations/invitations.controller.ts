@@ -23,8 +23,10 @@ import {
 } from 'src/utils/response-wrapper/responseWrapper';
 import { User } from 'src/utils/user.decorator';
 import { User as UserEntity } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
 @HR()
+@ApiTags('Invitations')
 @Controller('invitations')
 export class InvitationsController {
   constructor(private readonly invitationsService: InvitationsService) {}

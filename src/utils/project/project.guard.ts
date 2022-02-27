@@ -4,7 +4,7 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { ProjectResolver } from './project.resolver';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class ProjectGuard implements CanActivate {
     if (id === undefined) {
       if (request.body.projectId === undefined) return false;
       request.project = await this.prisma.project.findUnique({
-        where: { id: request.body.projectId },
+        where: { id: Number.parseInt(request.body.projectId) },
       });
     } else request.project = await this.resolver.resolve(Number.parseInt(id));
     return request.project !== undefined;

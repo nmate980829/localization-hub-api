@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TranslationsService } from './translations.service';
 import { TranslationsController } from './translations.controller';
 import { Resolver } from './resolver';
-import { UtilsModule } from 'src/utils/utils.module';
+import { PrismaModule } from 'src/utils/prisma/prisma.module';
 
 @Module({
-  imports: [UtilsModule],
+  imports: [PrismaModule],
   controllers: [TranslationsController],
   providers: [
     TranslationsService,

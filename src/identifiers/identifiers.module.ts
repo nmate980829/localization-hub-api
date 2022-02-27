@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { IdentifiersService } from './identifiers.service';
 import { IdentifiersController } from './identifiers.controller';
 import { Resolver } from './resolver';
-import { UtilsModule } from 'src/utils/utils.module';
+import { PrismaModule } from 'src/utils/prisma/prisma.module';
 
 @Module({
-  imports: [UtilsModule],
+  imports: [PrismaModule],
   controllers: [IdentifiersController],
   providers: [
     IdentifiersService,

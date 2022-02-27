@@ -19,7 +19,9 @@ import {
 import { Language } from 'src/entities/language';
 import { ListLanguage } from './dto/list-language.dto';
 import { EmptyResponse } from 'src/types/response.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Languages')
 @Controller('languages')
 export class LanguagesController {
   constructor(private readonly languagesService: LanguagesService) {}

@@ -23,7 +23,9 @@ import { UpdateTranslationDto } from './dto/update-translation.dto';
 import { IdentifierEntity } from './entities/translation.entity';
 import { TreeIdentifierDto } from 'src/identifiers/dto/tree-identifier.dto';
 import { EmptyResponse } from 'src/types/response.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Translations')
 @Controller('translations')
 export class TranslationsController {
   constructor(private readonly translationsService: TranslationsService) {}

@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { User, Comment, BUNDLE_STATUS } from '@prisma/client';
-import { PrismaService } from 'src/utils/prisma.service';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ListCommentDto } from './dto/list-comment.dto';
 

@@ -6,6 +6,7 @@ import { Bundle } from './bundle';
 import { Review } from './review';
 import { Comment } from './comment';
 import { Invite } from './invite';
+import { Token } from './token';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserRelations {
@@ -38,4 +39,7 @@ export class UserRelations {
 
   @ApiProperty({ isArray: true, type: () => Invite })
   invitations: Invite[];
+
+  @ApiProperty({ isArray: true, type: () => Token })
+  tokens: Token[];
 }

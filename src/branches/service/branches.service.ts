@@ -4,10 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Branch } from '@prisma/client';
-import { PrismaService } from 'src/utils/prisma.service';
-import { CreateBranchDto } from './dto/create-branch.dto';
-import { ListBranchDto } from './dto/list-branch.dto';
-import { MergeBranchDto } from './dto/merge-branch.dto';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
+import { CreateBranchDto } from '../dto/create-branch.dto';
+import { ListBranchDto } from '../dto/list-branch.dto';
+import { MergeBranchDto } from '../dto/merge-branch.dto';
 
 @Injectable()
 export class BranchesService {
@@ -15,7 +15,9 @@ export class BranchesService {
 
   async create(dto: CreateBranchDto): Promise<Branch> {
     const { key, projectId } = dto;
-    const conflict = await this.prisma.branch.findUnique({ where: { key } });
+    const conflict = await this.prisma.branch.findUnique({
+      where: { key_projectId: { key, projectId } },
+    });
     if (conflict && conflict.projectId === projectId)
       throw new ConflictException();
     return await this.prisma.branch.create({

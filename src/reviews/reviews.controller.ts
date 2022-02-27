@@ -12,7 +12,9 @@ import { User } from 'src/utils/user.decorator';
 import { ListReviewDto } from './dto/list-review.dto';
 import { Right } from 'src/utils/authorization/right.decorator';
 import { EmptyResponse } from 'src/types/response.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Reviews')
 @Controller('reviews')
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}

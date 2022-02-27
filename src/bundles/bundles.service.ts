@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Bundle } from '@prisma/client';
-import { PrismaService } from 'src/utils/prisma.service';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { CreateBundleDto } from './dto/create-bundle.dto';
 import { ListBundleDto } from './dto/list-bundle.dto';
 import { UpdateBundleDto } from './dto/update-bundle.dto';

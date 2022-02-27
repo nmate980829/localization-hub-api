@@ -1,14 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiExtraModels } from '@nestjs/swagger';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { Response } from './types/response.dto';
 
+@ApiTags('App')
 @ApiExtraModels(Response)
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('ping')
   getHello(): string {
     return this.appService.getHello();
   }

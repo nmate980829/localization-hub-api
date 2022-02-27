@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from 'src/utils/user.decorator';
 import { HR } from 'src/utils/authorization/serverRole.decorator';
 import { User as UserEntity } from '@prisma/client';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserResponse } from './dto/user-response.dto';
 import { ApiOk, ApiOkArray } from 'src/utils/response-wrapper/wrap.decorator';
 import {
@@ -16,6 +16,7 @@ import { UpdateMeDto } from './dto/update-me.dto';
 import { SocialDto } from 'src/auth/dto/social.dto';
 import { EmptyResponse } from 'src/types/response.dto';
 
+@ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {

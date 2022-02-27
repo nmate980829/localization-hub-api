@@ -15,10 +15,12 @@ import {
   ApiOk,
   ApiOkArray,
 } from 'src/utils/response-wrapper/wrap.decorator';
-import { AccessesService } from './accesses.service';
-import { CreateAccessDto } from './dto/create-access.dto';
-import { ListAccessDto } from './dto/list-access.dto';
+import { AccessesService } from '../service/accesses.service';
+import { CreateAccessDto } from '../dto/create-access.dto';
+import { ListAccessDto } from '../dto/list-access.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Access')
 @Controller('accesses')
 export class AccessesController {
   constructor(private readonly accessesService: AccessesService) {}

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Bundle } from 'src/entities/bundle';
 import { EmptyResponse } from 'src/types/response.dto';
 import { Right } from 'src/utils/authorization/right.decorator';
@@ -22,6 +23,7 @@ import { CreateBundleDto } from './dto/create-bundle.dto';
 import { ListBundleDto } from './dto/list-bundle.dto';
 import { UpdateBundleDto } from './dto/update-bundle.dto';
 
+@ApiTags('Bundles')
 @Controller('bundles')
 export class BundlesController {
   constructor(private readonly bundlesService: BundlesService) {}

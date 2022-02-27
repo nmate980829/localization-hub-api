@@ -1,15 +1,18 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ApiSecurity } from '@nestjs/swagger';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Invite } from 'src/entities/invite';
 import { ApiCreated, ApiOk } from 'src/utils/response-wrapper/wrap.decorator';
-import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { SocialDto } from './dto/social.dto';
-import { TokenDto } from './dto/token.dto';
+import { AuthService } from '../service/auth.service';
+import { LoginDto } from '../dto/login.dto';
+import { RegisterDto } from '../dto/register.dto';
+import { SocialDto } from '../dto/social.dto';
+import { TokenDto } from '../dto/token.dto';
+import { AccessTokenDto } from '../dto/access-token.dto';
+import { ClaimTokenDto } from '../dto/claim-token.dto';
 
 @ApiSecurity({})
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -18,17 +21,17 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  @ApiOk(TokenDto)
-  login(@Body() body: LoginDto): Promise<TokenDto> {
+  @ApiCreated(AccessTokenDto)
+  login(@Body() body: LoginDto): Promise<AccessTokenDto> {
     return this.authService.login(body);
   }
 
   @Post('register/:token')
-  @ApiCreated(TokenDto)
+  @ApiCreated(AccessTokenDto)
   register(
     @Param('token') token: string,
     @Body() body: RegisterDto,
-  ): Promise<TokenDto> {
+  ): Promise<AccessTokenDto> {
     return this.authService.register(token, body);
   }
 
@@ -39,16 +42,23 @@ export class AuthController {
   }
 
   @Post('google-signin/register/:token')
-  @ApiCreated(TokenDto)
+  @ApiCreated(AccessTokenDto)
   googleRegister(
     @Param('token') token: string,
     @Body() body: SocialDto,
-  ): Promise<TokenDto> {
-    return this.authService.registerGoogle(token, body.token);
+  ): Promise<AccessTokenDto> {
+    return this.authService.registerGoogle(token, body);
   }
+
   @Post('google-signin/login')
+  @ApiCreated(AccessTokenDto)
+  googleLogin(@Body() body: SocialDto): Promise<AccessTokenDto> {
+    return this.authService.loginGoogle(body);
+  }
+
+  @Post('claim')
   @ApiCreated(TokenDto)
-  googleLogin(@Body() body: SocialDto): Promise<TokenDto> {
-    return this.authService.loginGoogle(body.token);
+  claim(@Body() body: ClaimTokenDto): Promise<TokenDto> {
+    return this.authService.claim(body);
   }
 }

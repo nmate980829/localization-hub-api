@@ -22,7 +22,9 @@ import { User } from 'src/utils/user.decorator';
 import { User as UserEntity } from '@prisma/client';
 import { TransferProjectDto } from './dto/transfer-project.dto';
 import { EmptyResponse } from 'src/types/response.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Projects')
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}

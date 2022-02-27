@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AccessesService } from './accesses.service';
-import { AccessesController } from './accesses.controller';
-import { UtilsModule } from 'src/utils/utils.module';
-import { Resolver } from './resolver';
+import { AccessesService } from './service/accesses.service';
+import { AccessesController } from './controller/accesses.controller';
+import { PrismaModule } from 'src/utils/prisma/prisma.module';
+import { Resolver } from './resolver/resolver';
 
 @Module({
-  imports: [UtilsModule],
+  imports: [PrismaModule],
   controllers: [AccessesController],
   providers: [
     AccessesService,

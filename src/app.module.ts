@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { UtilsModule } from './utils/utils.module';
+import { PrismaModule } from './utils/prisma/prisma.module';
 import { InvitationsModule } from './invitations/invitations.module';
 import { ProjectsModule } from './projects/projects.module';
 import { LanguagesModule } from './languages/languages.module';
@@ -18,13 +18,14 @@ import { BranchesModule } from './branches/branches.module';
 import { IdentifiersModule } from './identifiers/identifiers.module';
 import { BundlesModule } from './bundles/bundles.module';
 import { TranslationsModule } from './translations/translations.module';
+import { TokensModule } from './tokens/tokens.module';
 
 @ApiBearerAuth()
 @Module({
   imports: [
     AuthModule,
     UsersModule,
-    UtilsModule,
+    PrismaModule,
     InvitationsModule,
     ProjectsModule,
     LanguagesModule,
@@ -37,6 +38,7 @@ import { TranslationsModule } from './translations/translations.module';
     IdentifiersModule,
     BundlesModule,
     TranslationsModule,
+    TokensModule,
   ],
   controllers: [AppController],
   providers: [AppService],

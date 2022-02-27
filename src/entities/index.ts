@@ -1,5 +1,7 @@
 import { User as _User } from './user';
 import { UserRelations as _UserRelations } from './user_relations';
+import { Token as _Token } from './token';
+import { TokenRelations as _TokenRelations } from './token_relations';
 import { Invite as _Invite } from './invite';
 import { InviteRelations as _InviteRelations } from './invite_relations';
 import { Project as _Project } from './project';
@@ -30,6 +32,8 @@ import { CommentRelations as _CommentRelations } from './comment_relations';
 export namespace PrismaModel {
   export class User extends _User {}
   export class UserRelations extends _UserRelations {}
+  export class Token extends _Token {}
+  export class TokenRelations extends _TokenRelations {}
   export class Invite extends _Invite {}
   export class InviteRelations extends _InviteRelations {}
   export class Project extends _Project {}
@@ -60,6 +64,8 @@ export namespace PrismaModel {
   export const extraModels = [
     User,
     UserRelations,
+    Token,
+    TokenRelations,
     Invite,
     InviteRelations,
     Project,

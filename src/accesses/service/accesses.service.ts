@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Access } from '@prisma/client';
-import { PrismaService } from 'src/utils/prisma.service';
-import { CreateAccessDto } from './dto/create-access.dto';
-import { ListAccessDto } from './dto/list-access.dto';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
+import { CreateAccessDto } from '../dto/create-access.dto';
+import { ListAccessDto } from '../dto/list-access.dto';
 
 @Injectable()
 export class AccessesService {

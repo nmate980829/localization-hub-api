@@ -15,11 +15,13 @@ import {
   ApiOk,
   ApiOkArray,
 } from 'src/utils/response-wrapper/wrap.decorator';
-import { BranchesService } from './branches.service';
-import { CreateBranchDto } from './dto/create-branch.dto';
-import { ListBranchDto } from './dto/list-branch.dto';
-import { MergeBranchDto } from './dto/merge-branch.dto';
+import { BranchesService } from '../service/branches.service';
+import { CreateBranchDto } from '../dto/create-branch.dto';
+import { ListBranchDto } from '../dto/list-branch.dto';
+import { MergeBranchDto } from '../dto/merge-branch.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Branches')
 @Controller('branches')
 export class BranchesController {
   constructor(private readonly branchesService: BranchesService) {}

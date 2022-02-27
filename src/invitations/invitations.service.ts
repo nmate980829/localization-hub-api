@@ -6,7 +6,7 @@ import {
 import crypto from 'crypto';
 import { Invite, SERVER_ROLE, User } from '@prisma/client';
 import { CreateInvitationDto } from './dto/create-invitation.dto';
-import { PrismaService } from 'src/utils/prisma.service';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { sendInvitation } from 'src/utils/email.service';
 import dayjs from 'dayjs';
 

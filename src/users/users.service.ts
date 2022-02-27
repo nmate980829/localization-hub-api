@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 import { SERVER_ROLE, User } from '@prisma/client';
-import { PrismaService } from 'src/utils/prisma.service';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { DeleteUserDto } from './dto/delete-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateMeDto } from './dto/update-me.dto';

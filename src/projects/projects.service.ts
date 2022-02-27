@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Project, User } from '@prisma/client';
-import { PrismaService } from 'src/utils/prisma.service';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { TransferProjectDto } from './dto/transfer-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
