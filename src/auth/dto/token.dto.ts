@@ -7,4 +7,6 @@ export class TokenDto {
   refresh: string;
   @ApiProperty({ type: String })
   server: string;
+  @ApiProperty({ type: String })
+  uiURL: string;
 }

@@ -10,6 +10,6 @@ export class LoginDto extends PickType(User, ['email', 'password'] as const) {
   password: string;
   @IsOptional()
   @MaxLength(32)
-  @ApiPropertyOptional({ type: Number })
+  @ApiPropertyOptional({ type: String })
   tokenDescription?: string;
 }

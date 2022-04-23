@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { RightsGuard } from 'src/utils/authorization/rights.guard';
+import { ProjectGuard } from 'src/utils/project/project.guard';
 import { IdentifiersController } from './identifiers.controller';
 import { IdentifiersService } from './identifiers.service';
 
@@ -9,7 +11,14 @@ describe('IdentifiersController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [IdentifiersController],
       providers: [IdentifiersService],
-    }).compile();
+    })
+      .overrideProvider(IdentifiersService)
+      .useValue({})
+      .overrideGuard(ProjectGuard)
+      .useValue({})
+      .overrideGuard(RightsGuard)
+      .useValue({})
+      .compile();
 
     controller = module.get<IdentifiersController>(IdentifiersController);
   });

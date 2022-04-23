@@ -1,4 +1,4 @@
-import { PickType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsArray, IsPositive, MaxLength, MinLength } from 'class-validator';
 import { Role } from 'src/entities/role';
 
@@ -16,5 +16,6 @@ export class CreateRoleDto extends PickType(Role, [
 
   @IsArray()
   @IsPositive({ each: true })
+  @ApiProperty({ isArray: true, type: Number })
   rights: number[];
 }

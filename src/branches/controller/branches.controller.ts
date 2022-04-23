@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { Branch } from 'src/entities/branch';
 import { EmptyResponse } from 'src/types/response.dto';
@@ -36,7 +37,7 @@ export class BranchesController {
   @Rights('read')
   @Get()
   @ApiOkArray(Branch)
-  findAll(@Body() dto: ListBranchDto): Promise<Branch[]> {
+  findAll(@Query() dto: ListBranchDto): Promise<Branch[]> {
     return this.branchesService.findAll(dto);
   }
 
@@ -55,7 +56,7 @@ export class BranchesController {
   }
 
   //delete is a dangerous operation because it can leave orphan keys. This right should not be given to a lot of people. If you can, please avoid it. Merge instead.
-  @Rights('delete')
+  @Rights('delete-branch')
   @Delete(':id')
   @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {

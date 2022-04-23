@@ -22,7 +22,6 @@ import { EmptyResponse } from 'src/types/response.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @HR()
   @Get()
   @ApiOkArray(UserResponse)
   async findAll(): Promise<UserResponse[]> {
@@ -68,11 +67,36 @@ export class UsersController {
     return this.usersService.removeMe(id, dto);
   }
 
-  @HR()
   @Get(':id')
   @ApiOk(UserResponse)
   async findOne(@Param('id') id: number): Promise<UserResponse> {
     return ResponseWrapper(UserResponse, await this.usersService.findOne(id));
+  }
+
+  @HR()
+  @Patch(':id/reset-password')
+  @ApiOk(UserResponse)
+  async reset(
+    @Param('id') id: number,
+    @User() user: UserEntity,
+  ): Promise<UserResponse> {
+    return ResponseWrapper(
+      UserResponse,
+      await this.usersService.reset(id, user),
+    );
+  }
+
+  @HR()
+  @Patch(':id/logout')
+  @ApiOk(UserResponse)
+  async logout(
+    @Param('id') id: number,
+    @User() user: UserEntity,
+  ): Promise<UserResponse> {
+    return ResponseWrapper(
+      UserResponse,
+      await this.usersService.logout(id, user),
+    );
   }
 
   @HR()

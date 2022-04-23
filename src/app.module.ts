@@ -48,6 +48,7 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
+        '/api/ping',
         '/api/auth',
         '/api/auth/(.*)',
         '/api/v([0-9]+)/auth',

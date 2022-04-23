@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { Resolver } from './resolver';
 
 describe('Resolver', () => {
@@ -6,8 +7,11 @@ describe('Resolver', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [Resolver],
-    }).compile();
+      providers: [Resolver, PrismaService],
+    })
+      .overrideProvider(PrismaService)
+      .useValue({})
+      .compile();
 
     provider = module.get<Resolver>(Resolver);
   });

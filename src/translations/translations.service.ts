@@ -2,6 +2,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { Identifier, Translation } from '@prisma/client';
@@ -104,9 +105,9 @@ export class TranslationsService {
     parent: Identifier,
     branches: string[],
   ): Promise<IdentifierEntity> {
-    const { parentId } = parent;
+    const { id } = parent;
     const children = await this.prisma.identifier.findMany({
-      where: { parentId, branch: { key: { in: branches } } },
+      where: { parentId: id, branch: { key: { in: branches } } },
     });
     const result = parent as IdentifierEntity;
     if (children.length === 0) {
@@ -144,6 +145,7 @@ export class TranslationsService {
     result.children = await Promise.all(
       children.map((child) => this.fetchChildren(child, branches)),
     );
+    return result;
   }
   async findOne(id: number): Promise<Translation> {
     const found = await this.prisma.translation.findUnique({ where: { id } });
@@ -187,9 +189,11 @@ export class TranslationsService {
     const found = await this.prisma.translation.findUnique({ where: { id } });
     if (!found) throw new NotFoundException();
     if (!moderator && found.userId !== userId) throw new ForbiddenException();
-    await this.prisma.translation.update({
+    // We have a unique constraint on @@unique([key, projectId, parentId]) you cannot create a new one if you use the deleted function. this is a temporary solution.
+    await this.prisma.translation.delete({ where: { id: found.id } });
+    /* await this.prisma.translation.update({
       where: { id },
       data: { deleted: true },
-    });
+    }); */
   }
 }

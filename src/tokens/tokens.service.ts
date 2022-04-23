@@ -3,13 +3,15 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Token } from '@prisma/client';
+import { Token, TOKEN_TYPE } from '@prisma/client';
 import { TokenDto } from 'src/auth/dto/token.dto';
 import { PrismaService } from 'src/utils/prisma/prisma.service';
 import crypto from 'crypto';
 import dayjs from 'dayjs';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { AccessTokenDto } from 'src/auth/dto/access-token.dto';
+import { CreateTokenDto } from './dto/create-token.dto';
 
 @Injectable()
 export class TokensService {
@@ -17,6 +19,24 @@ export class TokensService {
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
   ) {}
+
+  async create(body: CreateTokenDto, userId: number): Promise<AccessTokenDto> {
+    const access = crypto.randomBytes(20).toString('hex');
+    await this.prisma.token.create({
+      data: {
+        token: access,
+        expiration: dayjs().add(30, 'minutes').toDate(),
+        name: body.tokenDescription,
+        type: TOKEN_TYPE.ACCESS,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+    return { access, server: process.env.SERVER_URL };
+  }
 
   findAll(userId: number): Promise<Token[]> {
     return this.prisma.token.findMany({ where: { userId } });
@@ -50,7 +70,12 @@ export class TokensService {
         expiresIn: '30d',
       },
     );
-    return { token, refresh: refreshToken, server: process.env.SERVER_URL };
+    return {
+      token,
+      refresh: refreshToken,
+      server: process.env.SERVER_URL,
+      uiURL: process.env.UI_URL,
+    };
   }
 
   async remove(id: number, userId: number): Promise<void> {

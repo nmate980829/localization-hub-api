@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-const rights = [
+export const rights = [
   {
     name: 'read',
     description: 'The right to update project data',
@@ -75,7 +75,7 @@ const rights = [
     description: 'The right to update project data',
   },
 ];
-const roles = [
+export const roles = [
   {
     name: 'owner',
     description: 'The owner of the project',
@@ -110,3 +110,5 @@ export const Initialize = async () => {
   );
   await prisma.$disconnect();
 };
+
+Initialize();

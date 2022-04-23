@@ -12,14 +12,17 @@ export class ListTranslationDto extends PartialType(
 ) {
   @IsOptional()
   @IsBoolean()
+  @ApiPropertyOptional({ type: Boolean })
   deleted?: boolean;
 
   @IsOptional()
   @IsPositive()
+  @ApiPropertyOptional({ type: Number })
   identifierId?: number;
 
   @IsOptional()
   @IsPositive()
+  @ApiPropertyOptional({ type: Number })
   languageId?: number;
 
   @IsOptional()

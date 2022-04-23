@@ -6,6 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import { SERVER_ROLE, User } from '@prisma/client';
 import { PrismaService } from 'src/utils/prisma/prisma.service';
 import { DeleteUserDto } from './dto/delete-user.dto';
@@ -13,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateMeDto } from './dto/update-me.dto';
 import { SocialDto } from 'src/auth/dto/social.dto';
 import { OAuth2Client } from 'google-auth-library';
+import { sendPasswordReset } from 'src/utils/email.service';
 
 @Injectable()
 export class UsersService {
@@ -26,7 +28,7 @@ export class UsersService {
       },
     });
     if (!user) throw new NotFoundException();
-    const pwd = await bcrypt.hash(password, 8);
+    const pwd = password ? await bcrypt.hash(password, 8) : undefined;
     return await this.prisma.user.update({
       where: {
         id,
@@ -108,6 +110,49 @@ export class UsersService {
     return user;
   }
 
+  async reset(id: number, initiator: User): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) throw new NotFoundException();
+    if (user.role === SERVER_ROLE.ADMIN && initiator.role !== SERVER_ROLE.ADMIN)
+      throw new ForbiddenException();
+    const newPwd = crypto.randomBytes(20).toString('hex');
+    const password = await bcrypt.hash(newPwd, 8);
+
+    const newUser = await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        password,
+      },
+    });
+    sendPasswordReset(user.email, newPwd);
+    return newUser;
+  }
+
+  async logout(id: number, initiator: User): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) throw new NotFoundException();
+    if (user.role === SERVER_ROLE.ADMIN && initiator.role !== SERVER_ROLE.ADMIN)
+      throw new ForbiddenException();
+    await this.prisma.token.deleteMany({
+      where: {
+        user: {
+          id,
+        },
+      },
+    });
+    return user;
+  }
+
   async update(
     id: number,
     updateUserDto: UpdateUserDto,
@@ -141,14 +186,22 @@ export class UsersService {
       where: {
         id,
       },
+      include: {
+        projects: true,
+      },
     });
     if (!user) throw new NotFoundException();
     if (user.role === SERVER_ROLE.ADMIN && initiator.role !== SERVER_ROLE.ADMIN)
       throw new ForbiddenException();
-    await this.prisma.user.delete({
+    if (user.projects.length > 0)
+      throw new ConflictException(
+        'User owns project(s). You need to transfer them before deleting the user.',
+      );
+    const deleted = await this.prisma.user.delete({
       where: {
         id,
       },
     });
+    await this.prisma.invite.delete({ where: { id: deleted.inviteId } });
   }
 }

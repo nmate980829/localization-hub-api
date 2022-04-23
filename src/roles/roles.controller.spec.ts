@@ -9,7 +9,10 @@ describe('RolesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RolesController],
       providers: [RolesService],
-    }).compile();
+    })
+      .overrideProvider(RolesService)
+      .useValue({})
+      .compile();
 
     controller = module.get<RolesController>(RolesController);
   });

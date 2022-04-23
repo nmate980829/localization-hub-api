@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { TranslationsService } from './translations.service';
 import { CreateTranslationDto } from './dto/create-translation.dto';
@@ -43,14 +44,14 @@ export class TranslationsController {
   @Rights('read')
   @Get()
   @ApiOkArray(Translation)
-  findAll(@Body() dto: ListTranslationDto): Promise<Translation[]> {
+  findAll(@Query() dto: ListTranslationDto): Promise<Translation[]> {
     return this.translationsService.findAll(dto);
   }
 
   @Rights('read')
   @Get('/tree')
   @ApiOkArray(IdentifierEntity)
-  tree(@Body() dto: TreeIdentifierDto): Promise<IdentifierEntity[]> {
+  tree(@Query() dto: TreeIdentifierDto): Promise<IdentifierEntity[]> {
     return this.translationsService.tree(dto);
   }
 

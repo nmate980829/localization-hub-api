@@ -20,7 +20,6 @@ export class AuthMiddleware implements NestMiddleware {
     private readonly jwt: JwtService,
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
-    Logger.log('inside middleware');
     const authHeader = req.headers.authorization;
     if (authHeader === undefined || !authHeader.startsWith('Bearer '))
       throw new UnauthorizedException();

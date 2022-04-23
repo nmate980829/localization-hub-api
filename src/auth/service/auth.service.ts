@@ -254,6 +254,11 @@ export class AuthService {
         expiresIn: '30d',
       },
     );
-    return { token: jwt, refresh, server: process.env.SERVER_URL };
+    return {
+      token: jwt,
+      refresh,
+      server: process.env.SERVER_URL,
+      uiURL: process.env.UI_URL,
+    };
   }
 }

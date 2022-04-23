@@ -1,8 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Query } from '@nestjs/common';
 import { RightsService } from './rights.service';
 import { ApiOk, ApiOkArray } from 'src/utils/response-wrapper/wrap.decorator';
 import { Right } from 'src/entities/right';
 import { ApiTags } from '@nestjs/swagger';
+import { ListRightsDto } from './dto/list-rights.dto';
 
 @ApiTags('Rights')
 @Controller('rights')
@@ -11,8 +12,8 @@ export class RightsController {
 
   @Get()
   @ApiOkArray(Right)
-  findAll(): Promise<Right[]> {
-    return this.rightsService.findAll();
+  findAll(@Query() body: ListRightsDto): Promise<Right[]> {
+    return this.rightsService.findAll(body);
   }
 
   @Get(':id')

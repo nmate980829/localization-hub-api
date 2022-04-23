@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { CreateLanguageDto } from './dto/create-language.dto';
@@ -34,7 +35,7 @@ export class LanguagesController {
 
   @Get()
   @ApiOkArray(Language)
-  findAll(@Body() dto?: ListLanguage): Promise<Language[]> {
+  findAll(@Query() dto?: ListLanguage): Promise<Language[]> {
     return this.languagesService.findAll(dto);
   }
 

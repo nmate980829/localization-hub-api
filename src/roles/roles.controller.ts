@@ -20,12 +20,12 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { EmptyResponse } from 'src/types/response.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@PO()
 @ApiTags('Roles')
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
+  @PO()
   @Post()
   @ApiCreated(Role)
   create(@Body() dto: CreateRoleDto): Promise<Role> {
@@ -44,12 +44,14 @@ export class RolesController {
     return this.rolesService.findOne(id);
   }
 
+  @PO()
   @Patch(':id')
   @ApiOk(Role)
   update(@Param('id') id: number, @Body() dto: UpdateRoleDto): Promise<Role> {
     return this.rolesService.update(id, dto);
   }
 
+  @PO()
   @Delete(':id')
   @ApiOk(EmptyResponse)
   remove(@Param('id') id: number): Promise<void> {

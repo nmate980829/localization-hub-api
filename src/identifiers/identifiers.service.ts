@@ -41,7 +41,7 @@ export class IdentifiersService {
     return this.prisma.identifier.findMany({
       where: {
         projectId,
-        parentId,
+        parentId: parentId < 1 ? null : parentId,
         branchId: {
           in: branches,
         },

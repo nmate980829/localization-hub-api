@@ -1,5 +1,12 @@
-import { PickType } from '@nestjs/swagger';
-import { IsOptional, IsPositive, MaxLength, MinLength } from 'class-validator';
+import { ApiPropertyOptional, PickType } from '@nestjs/swagger';
+import {
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  MaxLength,
+  MinLength,
+  ValidateIf,
+} from 'class-validator';
 import { Identifier } from 'src/entities/identifier';
 
 export class CreateIdentifierDto extends PickType(Identifier, [
@@ -15,7 +22,9 @@ export class CreateIdentifierDto extends PickType(Identifier, [
   projectId: number;
   //should find a way to pass in null for a parent
   @IsOptional()
-  @IsPositive()
+  @IsNumber()
+  @ValidateIf((val) => val !== null)
+  @ApiPropertyOptional({ type: Number, nullable: true })
   parentId?: number | null;
   @IsPositive()
   branchId: number;

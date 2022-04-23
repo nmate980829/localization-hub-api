@@ -1,3 +1,4 @@
+import { NotImplementedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProjectResolver } from './project.resolver';
 
@@ -12,7 +13,7 @@ describe('ProjectResolver', () => {
     provider = module.get<ProjectResolver>(ProjectResolver);
   });
 
-  it('should be defined', () => {
-    expect(provider).toBeDefined();
+  it('should not be implemented', () => {
+    expect(() => provider.resolve(1)).toThrow(NotImplementedException);
   });
 });

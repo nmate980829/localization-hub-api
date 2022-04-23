@@ -52,7 +52,7 @@ export class RolesService {
     const found = await this.prisma.role.findUnique({ where: { id } });
     if (!found) throw new NotFoundException();
 
-    if (name !== undefined) {
+    if (name !== undefined && name !== found.name) {
       const conflict = await this.prisma.role.findUnique({ where: { name } });
       if (conflict) throw new ConflictException();
     }
@@ -69,7 +69,7 @@ export class RolesService {
     }
 
     const rightEntities = {
-      connect: rights?.map((right) => ({ id: right })),
+      set: rights?.map((right) => ({ id: right })),
     };
 
     return await this.prisma.role.update({

@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { Access } from 'src/entities/access';
 import { EmptyResponse } from 'src/types/response.dto';
@@ -34,7 +35,7 @@ export class AccessesController {
 
   @Get()
   @ApiOkArray(Access)
-  findAll(@Body() dto?: ListAccessDto): Promise<Access[]> {
+  findAll(@Query() dto?: ListAccessDto): Promise<Access[]> {
     return this.accessesService.findAll(dto);
   }
 

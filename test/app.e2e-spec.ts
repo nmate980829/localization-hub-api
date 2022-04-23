@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { Invite, PrismaClient, SERVER_ROLE } from '@prisma/client';
+import dayjs from 'dayjs';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -12,13 +14,11 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.setGlobalPrefix('api');
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('/api/ping (GET)', () => {
+    return request(app.getHttpServer()).get('/api/ping').expect(418);
   });
 });

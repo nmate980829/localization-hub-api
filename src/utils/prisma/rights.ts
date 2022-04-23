@@ -28,7 +28,7 @@ export const initRights = [
     description: 'The right to update project data',
   },
   {
-    name: 'bundle',
+    name: 'bundle-branch',
     description: 'The right to update project data',
   },
   {

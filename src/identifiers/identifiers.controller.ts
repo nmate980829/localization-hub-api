@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { IdentifiersService } from './identifiers.service';
 import { CreateIdentifierDto } from './dto/create-identifier.dto';
@@ -41,14 +42,14 @@ export class IdentifiersController {
   @Rights('read')
   @Get()
   @ApiOkArray(Identifier)
-  findAll(@Body() dto: ListIdentifierDto): Promise<Identifier[]> {
+  findAll(@Query() dto: ListIdentifierDto): Promise<Identifier[]> {
     return this.identifiersService.findAll(dto);
   }
 
   @Rights('read')
   @Get('/tree')
   @ApiOkArray(Identifier)
-  tree(@Body() dto: TreeIdentifierDto): Promise<Identifier[]> {
+  tree(@Query() dto: TreeIdentifierDto): Promise<Identifier[]> {
     return this.identifiersService.tree(dto);
   }
 

@@ -11,7 +11,11 @@ import { TokensService } from './tokens.service';
 import { Request } from 'express';
 import { User } from 'src/utils/user.decorator';
 import { TokenResponse } from './dto/token-response.dto';
-import { ApiOk, ApiOkArray } from 'src/utils/response-wrapper/wrap.decorator';
+import {
+  ApiCreated,
+  ApiOk,
+  ApiOkArray,
+} from 'src/utils/response-wrapper/wrap.decorator';
 import { TokenDto } from 'src/auth/dto/token.dto';
 import { EmptyResponse } from 'src/types/response.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -20,11 +24,22 @@ import {
   ResponseWrapper,
 } from 'src/utils/response-wrapper/responseWrapper';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { AccessTokenDto } from 'src/auth/dto/access-token.dto';
+import { CreateTokenDto } from './dto/create-token.dto';
 
 @ApiTags('Tokens')
 @Controller('tokens')
 export class TokensController {
   constructor(private readonly tokensService: TokensService) {}
+
+  @Post()
+  @ApiCreated(AccessTokenDto)
+  create(
+    @Body() body: CreateTokenDto,
+    @User('id') userId: number,
+  ): Promise<AccessTokenDto> {
+    return this.tokensService.create(body, userId);
+  }
 
   @Get()
   @ApiOkArray(TokenResponse)

@@ -1,3 +1,4 @@
+import { ImATeapotException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,8 +16,9 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should throw im a teapot exception with the word pong!"', () => {
+      expect(() => appController.getHello()).toThrow(ImATeapotException);
+      expect(() => appController.getHello()).toThrow('pong');
     });
   });
 });

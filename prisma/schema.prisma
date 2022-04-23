@@ -23,15 +23,15 @@ generator prismaClassGenerator {
   //provider = "node node_modules/prisma-docs-generator"
 //}
 
-generator erd {
-  provider = "prisma-erd-generator"
-  output = "./ERD.png"
+//generator erd {
+  //provider = "prisma-erd-generator"
+  //output = "./ERD.png"
   //theme = "neutral"
   //default (default)
   //forest
   //dark
   //neutral
-}
+//}
 
 model User {
   id                 Int              @id @default(autoincrement())
@@ -65,7 +65,7 @@ model Token {
   expiration         DateTime         @default(now())
   name               String?           
   type               TOKEN_TYPE       @default(ACCESS)
-  user               User             @relation(fields: [userId], references: [id])
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId             Int
   updatedAt          DateTime         @default(now()) @updatedAt
   createdAt          DateTime         @default(now())

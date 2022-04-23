@@ -5984,9 +5984,10 @@ printj@~1.1.0:
   resolved "https://registry.yarnpkg.com/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
   integrity sha512-zA2SmoLaxZyArQTOPj5LXecR+RagfPSU5Kw1qP+jkWeNlrq+eJZyY2oS68SU1Z/7/myXM4lo9716laOFAVStCQ==
 
-"prisma-class-generator@git+https://github.com/nmate980829/prisma-class-generator.git":
-  version "0.1.11"
-  resolved "git+https://github.com/nmate980829/prisma-class-generator.git#ab9ae4ef240d8a9e672faa0c1d8028eb6025d03e"
+prisma-class-generator@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/prisma-class-generator/-/prisma-class-generator-0.1.12.tgz#8d5e971f9900c1396307e575d25d7415e73b3ffa"
+  integrity sha512-IsgOjcR//QJxjY8d1YO27OuvY40512tLfLdA8MU4HKlmR6ornvJurjOCAQVswGnjwhFSJhVfe6ybs89xlVKN3A==
   dependencies:
     "@prisma/client" "^3.7.0"
     "@prisma/generator-helper" "^3.7.0"
