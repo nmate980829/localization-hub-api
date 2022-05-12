@@ -120,9 +120,7 @@ export const Initialize = async () => {
       expiration: dayjs().add(30, 'days').toDate(),
     },
   });
-  console.log(
-    `Your initial admin invite: ${process.env.UI_URL}/register/${token}`,
-  );
+  console.log(`Your initial admin invite: /register/${token}`);
   await prisma.$disconnect();
 };
 
