@@ -14,7 +14,7 @@ import { WrapInterceptor } from './utils/response-wrapper/wrap.interceptor';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
-  app.enableCors({ origin: 'http://localhost:3001' });
+  app.enableCors({ origin: process.env.UI_URL });
   app.setGlobalPrefix('api');
   app.enableVersioning({
     //defaultVersion: process.env.API_VERSION
