@@ -17,7 +17,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "start:docker": "node dist/utils/init && start:prod",
+    "start:docker": "migrate:dev && node dist/utils/init && start:prod",
     "migrate:dev": "prisma migrate dev",
     "migrate:seed": "prisma db seed",
     "prisma:generate": "prisma generate",
