@@ -5,7 +5,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Project, User } from '@prisma/client';
+import { Project, SERVER_ROLE, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -22,6 +22,9 @@ export class RightsGuard implements CanActivate {
     }
     const request = context.switchToHttp().getRequest();
     const user: User = request.user;
+    if (user.role === SERVER_ROLE.ADMIN) {
+      return true;
+    }
     const project: Project = request.project;
     const accesses = await this.prisma.access.findMany({
       where: {
