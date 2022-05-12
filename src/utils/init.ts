@@ -1,4 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, SERVER_ROLE } from '@prisma/client';
+import crypto from 'crypto';
+import dayjs from 'dayjs';
+
 const prisma = new PrismaClient();
 
 export const rights = [
@@ -107,6 +110,18 @@ export const Initialize = async () => {
         },
       });
     }),
+  );
+  const token = crypto.randomBytes(20).toString('hex');
+  const invite = await prisma.invite.create({
+    data: {
+      email: `admin@test.com`,
+      role: SERVER_ROLE.ADMIN,
+      token,
+      expiration: dayjs().add(30, 'days').toDate(),
+    },
+  });
+  console.log(
+    `Your initial admin invite: ${process.env.UI_URL}/register/${token}`,
   );
   await prisma.$disconnect();
 };
