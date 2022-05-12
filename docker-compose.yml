@@ -1,0 +1,29 @@
+version: "3.5"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3000"
+    env_file:
+      - .env
+    networks:
+      - lohub-network
+    restart: always
+  postgres:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    networks:
+      lohub-network:
+        aliases:
+          - postgresql.db
+    volumes:
+      - postgres:/var/lib/postgresql/lohub-data
+volumes:
+  postgres:
+networks:
+  lohub-network:
