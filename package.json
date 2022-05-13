@@ -17,6 +17,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:docker": "migrate:deploy && init:rights && start:prod",
     "init:rights": "node dist/utils/init",
     "migrate:dev": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
