@@ -52,7 +52,7 @@ export const sendInvitation = async (email: string, token: string) => {
     subject: 'You got an invitation to join this Locahub server',
     text: `You got an invitation to join ${process.env.NAME}. It is an instance of the Locahub project. You can accept your invitation at ${process.env.UI_URL}/register/${token}`,
     html: `
-      <div style="width: 100%; height: 100%; background-color: lightGray;">
+      <div style="width: 100%; height: 100%;">
         <h1>Please join ${process.env.NAME}!</h1>
         <p>You got an invitation to join ${process.env.NAME}.
           It is an instance of the Locahub project.
