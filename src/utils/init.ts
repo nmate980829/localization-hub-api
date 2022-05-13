@@ -111,16 +111,19 @@ export const Initialize = async () => {
       });
     }),
   );
-  const token = crypto.randomBytes(20).toString('hex');
-  const invite = await prisma.invite.create({
-    data: {
-      email: `admin@test.com`,
-      role: SERVER_ROLE.ADMIN,
-      token,
-      expiration: dayjs().add(30, 'days').toDate(),
-    },
-  });
-  console.log(`Your initial admin invite: /register/${token}`);
+  const invitenum = await prisma.invite.count();
+  if (invitenum < 1) {
+    const token = crypto.randomBytes(20).toString('hex');
+    const invite = await prisma.invite.create({
+      data: {
+        email: `admin@test.com`,
+        role: SERVER_ROLE.ADMIN,
+        token,
+        expiration: dayjs().add(30, 'days').toDate(),
+      },
+    });
+    console.log(`Your initial admin invite: /register/${token}`);
+  }
   await prisma.$disconnect();
 };
 
