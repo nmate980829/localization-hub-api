@@ -52,7 +52,13 @@ You have to copy the compose file from the projects root directory and create a 
 docker-compose up
 ``` 
 
-When you start the server the first time, the container will fail. You have to initialize the database by running these commands:
+After deploying the project, you can retrieve your initial admin invitation by running the following command:
+
+```bash
+docker logs lohub-api_web_1 | grep invite
+```
+
+If prisma fails with the database, you have to initialize the database by running these commands:
 
 ```bash
 docker container run --network lohub-api_lohub -it --entrypoint /bin/sh nm0829/lohub-api
