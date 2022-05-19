@@ -3,13 +3,13 @@ import { JwtService } from '@nestjs/jwt';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Invite } from 'src/entities/invite';
 import { ApiCreated, ApiOk } from 'src/utils/response-wrapper/wrap.decorator';
-import { AuthService } from '../service/auth.service';
-import { LoginDto } from '../dto/login.dto';
-import { RegisterDto } from '../dto/register.dto';
-import { SocialDto } from '../dto/social.dto';
-import { TokenDto } from '../dto/token.dto';
-import { AccessTokenDto } from '../dto/access-token.dto';
-import { ClaimTokenDto } from '../dto/claim-token.dto';
+import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { SocialDto } from './dto/social.dto';
+import { TokenDto } from './dto/token.dto';
+import { AccessTokenDto } from './dto/access-token.dto';
+import { ClaimTokenDto } from './dto/claim-token.dto';
 
 @ApiSecurity({})
 @ApiTags('Authentication')

@@ -11,12 +11,12 @@ import dayjs from 'dayjs';
 import { OAuth2Client } from 'google-auth-library';
 import crypto from 'crypto';
 import { PrismaService } from 'src/utils/prisma/prisma.service';
-import { LoginDto } from '../dto/login.dto';
-import { RegisterDto } from '../dto/register.dto';
-import { TokenDto } from '../dto/token.dto';
-import { SocialDto } from '../dto/social.dto';
-import { AccessTokenDto } from '../dto/access-token.dto';
-import { ClaimTokenDto } from '../dto/claim-token.dto';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { TokenDto } from './dto/token.dto';
+import { SocialDto } from './dto/social.dto';
+import { AccessTokenDto } from './dto/access-token.dto';
+import { ClaimTokenDto } from './dto/claim-token.dto';
 
 // TODO: email verification
 @Injectable()

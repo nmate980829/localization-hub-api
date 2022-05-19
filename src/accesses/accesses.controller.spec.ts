@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BranchesController } from './branches.controller';
-import { BranchesService } from '../service/branches.service';
+import { AccessesController } from './accesses.controller';
+import { AccessesService } from './accesses.service';
 import { ProjectGuard } from 'src/utils/project/project.guard';
 import { RightsGuard } from 'src/utils/authorization/rights.guard';
 
-describe('BranchesController', () => {
-  let controller: BranchesController;
+describe('AccessesController', () => {
+  let controller: AccessesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [BranchesController],
-      providers: [BranchesService],
+      controllers: [AccessesController],
+      providers: [AccessesService],
     })
-      .overrideProvider(BranchesService)
+      .overrideProvider(AccessesService)
       .useValue({})
       .overrideGuard(ProjectGuard)
       .useValue({})
@@ -20,7 +20,7 @@ describe('BranchesController', () => {
       .useValue({})
       .compile();
 
-    controller = module.get<BranchesController>(BranchesController);
+    controller = module.get<AccessesController>(AccessesController);
   });
 
   it('should be defined', () => {

@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 import { Branch } from '@prisma/client';
 import { PrismaService } from 'src/utils/prisma/prisma.service';
-import { CreateBranchDto } from '../dto/create-branch.dto';
-import { ListBranchDto } from '../dto/list-branch.dto';
-import { MergeBranchDto } from '../dto/merge-branch.dto';
+import { CreateBranchDto } from './dto/create-branch.dto';
+import { ListBranchDto } from './dto/list-branch.dto';
+import { MergeBranchDto } from './dto/merge-branch.dto';
 
 @Injectable()
 export class BranchesService {
